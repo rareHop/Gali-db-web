@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FormEvent } from 'react'
 import ReactDOM from 'react-dom/client'
 import './simple-app.css'
 
@@ -8,7 +8,7 @@ function Login({ onClose }: { onClose: () => void }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Simple validation
     if (!username || !password) {
@@ -20,9 +20,8 @@ function Login({ onClose }: { onClose: () => void }) {
     if (username === 'admin' && password === 'password') {
       // Success
       onClose();
-      alert('Login successful! Welcome ' + username);
     } else {
-      setError('Invalid credentials. Try admin/password');
+      setError('Invalid username or password');
     }
   };
   
@@ -207,7 +206,7 @@ function JsonFormatter({ jsonData }: { jsonData: any }) {
 }
 
 // Slang entry component with expand/collapse functionality
-function SlangEntry({ entry, isExpanded, onToggleExpand, theme }: { entry: any, isExpanded: boolean, onToggleExpand: () => void, theme?: string }) {
+function SlangEntry({ entry, isExpanded, onToggleExpand }: { entry: any, isExpanded: boolean, onToggleExpand: () => void }) {
   const hasWarning = entry.meaning.toLowerCase().includes('caution:') || 
                     entry.meaning.toLowerCase().includes('vulgar') || 
                     entry.term.toLowerCase().includes('chutiya') ||
@@ -389,7 +388,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home')
   const [term, setTerm] = useState('')
   const [category, setCategory] = useState('Hinglish')
-  const [author, setAuthor] = useState('Anonymous')
+  const [author] = useState('Anonymous')
   const [expandedEntryId, setExpandedEntryId] = useState<number | null>(null)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showAllContributors, setShowAllContributors] = useState(false)
@@ -441,7 +440,7 @@ function App() {
     setExpandedEntryId(expandedEntryId === id ? null : id);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     alert(`Submitted: ${term} in category ${category}`);
     // In a real app, you would submit to a database here
@@ -625,7 +624,6 @@ function App() {
                       entry={entry} 
                       isExpanded={expandedEntryId === entry.id}
                       onToggleExpand={() => toggleExpandEntry(entry.id)}
-                      theme={theme}
                     />
                   ))}
                 </div>

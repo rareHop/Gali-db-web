@@ -1,81 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-interface Contributor {
+type Contributor = {
   id: number;
   name: string;
-  avatar: string;
+  avatarUrl: string;
   contributions: number;
-  rank: number;
-}
-
-const dummyContributors: Contributor[] = [
-  {
-    id: 1,
-    name: "SlangMaster",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-    contributions: 156,
-    rank: 1
-  },
-  {
-    id: 2,
-    name: "WordWizard",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-    contributions: 143,
-    rank: 2
-  },
-  {
-    id: 3,
-    name: "LexiconPro",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-    contributions: 128,
-    rank: 3
-  },
-  {
-    id: 4,
-    name: "SlangGuru",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
-    contributions: 112,
-    rank: 4
-  },
-  {
-    id: 5,
-    name: "Wordsmith",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=5",
-    contributions: 98,
-    rank: 5
-  }
-];
-
+};
 
 export default function TopContributors() {
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-      <div className="bg-green-600 dark:bg-green-700 p-4">
-        <h2 className="text-xl font-bold text-white text-center">
-          Top Contributors
-        </h2>
-      </div>
+  const [showAll, setShowAll] = useState(false);
 
-      <div className="flex flex-col">
-        {dummyContributors.slice(0, 3).map((contributor) => (
-          <div
-            key={contributor.id}
-            className="flex items-center justify-center p-4 border-b border-gray-200 dark:border-gray-700"
-          >
-            <p className="text-xl font-medium text-gray-900 dark:text-white text-center">
-              {contributor.name}
-            </p>
+  const contributors: Contributor[] = [
+    { id: 1, name: "Ravi", avatarUrl: "https://i.pravatar.cc/150?img=1", contributions: 43 },
+    { id: 2, name: "Priya", avatarUrl: "https://i.pravatar.cc/150?img=5", contributions: 37 },
+    { id: 3, name: "Vikram", avatarUrl: "https://i.pravatar.cc/150?img=3", contributions: 29 },
+    { id: 4, name: "Neha", avatarUrl: "https://i.pravatar.cc/150?img=9", contributions: 24 },
+    { id: 5, name: "Arjun", avatarUrl: "https://i.pravatar.cc/150?img=6", contributions: 18 },
+    { id: 6, name: "Meera", avatarUrl: "https://i.pravatar.cc/150?img=10", contributions: 15 },
+    { id: 7, name: "Raj", avatarUrl: "https://i.pravatar.cc/150?img=12", contributions: 13 },
+    { id: 8, name: "Anjali", avatarUrl: "https://i.pravatar.cc/150?img=25", contributions: 11 },
+  ];
+
+  const displayedContributors = showAll ? contributors : contributors.slice(0, 5);
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+      <h2 className="text-xl font-bold mb-4">Top Contributors</h2>
+      <div className="space-y-3">
+        {displayedContributors.map(contributor => (
+          <div key={contributor.id} className="flex items-center space-x-3">
+            <img 
+              src={contributor.avatarUrl} 
+              alt={contributor.name} 
+              className="w-10 h-10 rounded-full"
+            />
+            <div className="flex-1">
+              <div className="font-medium">{contributor.name}</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {contributor.contributions} contributions
+              </div>
+            </div>
           </div>
         ))}
-        
-        <div className="flex justify-center py-4">
-          <div className="flex flex-col items-center space-y-2">
-            <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-          </div>
-        </div>
       </div>
+      {contributors.length > 5 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="mt-4 w-full text-center py-2 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+        >
+          {showAll ? "Show Less" : "Show All"}
+        </button>
+      )}
     </div>
   );
 }

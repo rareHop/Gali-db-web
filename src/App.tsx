@@ -1,28 +1,27 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
-import { ThemeProvider } from './context/ThemeContext';
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
           <Navbar />
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto py-6 px-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
             </Routes>
           </main>
-          <Toaster position="bottom-right" />
+          <footer className="container mx-auto py-4 px-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            © 2023 Hinglish Dictionary - All rights reserved
+          </footer>
         </div>
       </Router>
     </ThemeProvider>
   );
 }
-
-export default App;

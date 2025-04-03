@@ -7,7 +7,7 @@ export default function Home() {
   const [refreshList, setRefreshList] = useState(false);
 
   const handleNewSubmission = () => {
-    setRefreshList(prev => !prev);
+    setRefreshList((prev: boolean) => !prev);
   };
 
   return (
